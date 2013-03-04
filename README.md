@@ -48,11 +48,12 @@ Embedded documentation is only available to functions. It must be valid JSON and
 ### in the browser
 
 To use braceDoc in the browser simply include the braceDoc script in html.  
-```<script src="braceDoc!.js" type="text/javascript"></script>```
+
+    <script src="braceDoc!.js" type="text/javascript"></script>
 
 ### with Node
 
-```require('braceDoc!.js')```
+    require('braceDoc!.js')
 
 ## Javascript standard library docs
 
