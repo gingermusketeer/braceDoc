@@ -31,7 +31,7 @@
   "devDependencies": {
     "grunt": "~0.4",
     "grunt-contrib-jshint": "*",
-    "grunt-contrib-jasmine-node": "*"
+    "grunt-jasmine-node": "*"
   },
   "keywords": []
 }
