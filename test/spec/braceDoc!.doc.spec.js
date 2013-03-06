@@ -27,18 +27,18 @@ describe("braceDoc!.doc", function(){
         it("info.lib object", function(){
             expect(lib._info()).not.toMatch(errorRegex);    
         });
+
+        function testDoc(property){
+            it("info.lib." + property, function(){
+                var doc = lib[property]._info.lib.getDocumentationFor(lib[property]);
+                expect(lib[property]._info()).not.toMatch(errorRegex);
+                expect(docValidator(doc).isValid).toEqual(true);
+            });
+        }
        
         for(var property in lib) {
             if(lib.hasOwnProperty(property) && property !== "_customDoc"){
-                
-                it("info.lib." + property, (function(property){
-                    return function(){
-                        var doc = lib[property]._info.lib.getDocumentationFor(lib[property]);
-                        expect(lib[property]._info()).not.toMatch(errorRegex);
-                        expect(docValidator(doc).isValid).toEqual(true);
-                    };
-                }(property)));
-
+                testDoc(property);
             }
         }
     });

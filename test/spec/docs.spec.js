@@ -55,14 +55,15 @@ describe("docs directory", function baseDocs(){
     });
 
     describe("has valid docs:", function testDocs(){
-        
+        function testDoc(docName){
+            it(docName, function(){
+                expect(docName).toBeAValidDoc();
+            });
+        }
+
         for (var i = docFileNames.length - 1; i >= 0; i--) {
-            var currentDocName = docFileNames[i];
-            it(currentDocName, (function(docName){
-                return function(){
-                    expect(docName).toBeAValidDoc();
-                };
-            }(currentDocName)));
+            testDoc(docFileNames[i]);
+            
         }
         
     });
