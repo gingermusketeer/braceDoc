@@ -35,7 +35,7 @@ describe("docSpecChecker", function describeBase(){
     });
 
     it("validates docs with only a description", function testDescription(){
-        
+
         var doc = {
             description: "test"
         };
@@ -80,7 +80,7 @@ describe("docSpecChecker", function describeBase(){
             prop2: ["a", "long", "prop"],
             prop: {
                 description: "a function",
-                args: "only the one",
+                params: "only the one",
                 returns: "awesome"
             }
         };
@@ -96,50 +96,70 @@ describe("docSpecChecker", function describeBase(){
 
     });
 
-    it("validates docs with args as a single string", function testShortArgs(){
-        validDoc.args = "a string";
+    it("validates docs with params as a single string", function testShortParams(){
+        validDoc.params = "a string";
 
         expect(docValidator(validDoc).isValid).toBeTrue();
     });
 
-    it("validates docs with args as a array of strings", function testLongArgs(){
-        validDoc.args = ["a", "long", "arg"];
+    it("validates docs with params as a array of strings", function testLongParams(){
+        validDoc.params = ["a", "long", "param"];
 
         expect(docValidator(validDoc).isValid).toBeTrue();
     });
 
-    it("validates docs with args as a dict", function testDictArgs(){
-        validDoc.args = {
-            description: "an arg"
+    it("validates docs with params as a dict", function testDictParams(){
+        validDoc.params = {
+            description: "an param"
         };
         expect(docValidator(validDoc).isValid).toBeTrue();
     });
 
-    it("validates docs with args as an array of dicts", function testArrayOfArgs(){
-        validDoc.args = [
+    it("validates docs with params as an array of dicts", function testArrayOfParams(){
+        validDoc.params = [
             {
-                description: "arg 1"
+                description: "param 1"
             },
             {
-                description: "arg 2"
+                description: "param 2"
             }
         ];
 
         expect(docValidator(validDoc).isValid).toBeTrue();
     });
 
-    it("validates docs with args as an array of function signatures", function testArrayOfSignatures(){
-        validDoc.args = [
+    it("validates docs with params as an array of function signatures", function testArrayOfSignatures(){
+        validDoc.params = [
             [
-                { description: "signature 1, arg 1"}
+                { description: "signature 1, param 1"}
             ],
             [
-                { description:  "signature 2, arg 1"},
-                { description: "signature 2, arg 2"}
+                { description:  "signature 2, param 1"},
+                { description: "signature 2, param 2"}
             ]
         ];
 
         expect(docValidator(validDoc).isValid).toBeTrue();
+    });
+
+    it("passes back a list of all the unspecified properties", function(){
+        validDoc.BaseUnspecified = "";
+        validDoc.params = {
+            description: "",
+            unspecifiedInParams: ""
+        };
+        validDoc.properties = {
+            someProp: {
+                description: "",
+                unspecifiedInProperties: ""
+            }
+        };
+
+        var result = docValidator(validDoc);
+
+        expect(result.isValid).toBeTrue();
+
+        expect(result.unspecifiedProperties.length).toBe(3);
     });
 
 });

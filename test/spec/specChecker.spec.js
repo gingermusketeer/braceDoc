@@ -119,4 +119,24 @@ describe("specChecker", function() {
 
         expect(specChecker.doesObjConformToSpec).toHaveBeenCalled();
     });
+
+    it("returns a list of unknown properties with paths", function unknownProperties(){
+        var spec = {
+            desc: {
+                required: false,
+                validator: function(){ return true; }
+            }
+        };
+
+        var obj = {
+            unSpecified: "yeah"
+        };
+
+        var result = specChecker.does(obj).conformTo(spec);
+
+        expect(result.isValid).toBeTrue();
+        expect(result.unspecifiedProperties.length).toBe(1);
+        expect(result.unspecifiedProperties[0].property).toBe("unSpecified");
+        expect(result.unspecifiedProperties[0].path).toBe(".unSpecified");
+    });
 });
