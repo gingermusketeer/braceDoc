@@ -40,16 +40,18 @@ describe("docs directory", function baseDocs(){
                 };
 
                 require('../../lib/docs/' + docName);
-                
-                var result = docValidator(currentDoc);
 
+                var result = docValidator(currentDoc);
+                var unspecifiedProperties = result.unspecifiedProperties.reduce(function(previous, current){
+                    return previous + current.property + " with path: " + current.path + " \n";
+                }, "Illegal unknown properties: \n");
                 this.message = function(){
-                    return [result.errors, result.errors];
+                    return [result.errors + unspecifiedProperties, result.errors + unspecifiedProperties];
                 };
 
                 // Put the old function back
                 Object.prototype._info = oldObjectInfo;
-                return result.isValid;
+                return result.isValid && result.unspecifiedProperties.length === 0;
             }
         });
     });
@@ -63,8 +65,6 @@ describe("docs directory", function baseDocs(){
 
         for (var i = docFileNames.length - 1; i >= 0; i--) {
             testDoc(docFileNames[i]);
-            
         }
-        
     });
 });
