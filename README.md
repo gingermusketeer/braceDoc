@@ -15,23 +15,30 @@ braceDoc expects the documentation object to have the following properties
 
 * description
     * A string or an array of strings describing the object
-* args
-    * A string if there is only one arg (this is the description for the arg), otherwise a signature array or an array of signature arrays (multiple signatures for the function). See args below.
+* params
+    * A string if there is only one param (this is the description for the param), otherwise a param doc object, a signature array or an array of signature arrays (multiple signatures for the function). See params below.
 * properties
     * Each property with an associated braceDoc object
 * returns
     * A string or array of strings describing what the function returns
+* required
+    * true if it is required, false otherwise. The default value is true. This is mainly used for documenting function parameters.
+* exampleVal
+    * A sensible example of what this could be (if it is optional and has a default, put the default). Strings should be double quoted e.g "'abc'" -> 'abc'. The default is an empty object {}. Again this is mainly used for function parameters.
 
-#### args
-* arg doc
-    * a braceDoc object (see above) with the following additional properties
-        * required - true if the arg is required for the function, false otherwise. The default value is true.
-        * exampleVal - a sensible example of what this value could be (if it is optional and has a default, put the default). Strings should be double quoted e.g "'abc'" -> 'abc'. The default is an empty object {} .
+#### params
+* param doc
+    * a braceDoc object (see above)
+        * ```{ "description": "", "required": false, "exampleVal": "'1, 2, 3'" }```
+    * or a string
+        * ```"the description for the param"```
 * signature array
-    * an array of arg docs - one function signature multiple args
-    * ```{ "description": "", "required": false, "exampleVal": "1, 2, 3" }```
+    * an array of param docs - one function signature multiple params
+        * ```[{ "description": "" }, { "description": "" }]```
+
 * array of signature arrays
     * multiple function signatures
+        * ```[[/*signature array 1*/], [/*signature array 2*/]]```
 
 ### Embedded Documentation
 
@@ -47,7 +54,7 @@ Embedded documentation is only available to functions. It must be valid JSON and
 
 ### in the browser
 
-To use braceDoc in the browser simply include the braceDoc script in html.  
+To use braceDoc in the browser simply include the braceDoc script in html.
 
     <script src="braceDoc!.js" type="text/javascript"></script>
 
@@ -65,23 +72,23 @@ Please contribute to these doc files
 
 Documenting a function.
 
-    function concat(somearg)  
-    /*{  
+    function concat(someParam)
+    /*{
         description: [
-           "Returns a new array comprised of this array joined with the other array(s)",  
+           "Returns a new array comprised of this array joined with the other array(s)",
            "and/or value(s) passed in."
-        ],  
-        args: {  
-            description: "Arrays and/or values to concatenate to the resulting array.",  
-            required: true,  
-            exampleVal: [1, 2, 3]  
+        ],
+        params: {
+            description: "Arrays and/or values to concatenate to the resulting array.",
+            required: true,
+            exampleVal: [1, 2, 3]
         },
         returns: [
             "The new array containing the elements from the array on which it ",
             "was called followed by the arguments passed in",
         ]
     }*/
-    { 
+    {
         /*implementation...*/
     }
 
@@ -95,5 +102,5 @@ Retrieving the documentation.
 In lieu of a formal style-guide, take care to maintain the existing coding style. Add Jasmine tests for any new or changed functionality. Lint and test your code using [grunt](https://github.com/gruntjs/grunt).
 
 ## License
-Copyright (c) 2013 Max Brosnahan  
+Copyright (c) 2013 Max Brosnahan
 Licensed under the MIT license.
