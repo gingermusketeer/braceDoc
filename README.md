@@ -1,4 +1,4 @@
-# /\*{}\*/ - braceDoc
+# /\*{}\*/ - braceDoc [![Build Status](https://travis-ci.org/gingermusketeer/braceDoc.png?branch=master)](https://travis-ci.org/gingermusketeer/braceDoc)
 
 Provides live JavaScript documentation. Using braceDoc syntax for function documentation allows it to be accessed when you need it. For example if you are debugging in the browser you can call _info() on the function you want to know about and it will return the documentation for that function.
 
