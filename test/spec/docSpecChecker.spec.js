@@ -30,6 +30,9 @@ describe("docSpecChecker", function describeBase(){
             },
             toBeFalse: function(){
                 return typeof this.actual === "boolean" && !this.actual;
+            },
+            toBeValid: function(){
+                return this.actual.isValid && this.actual.unspecifiedProperties.length === 0 && this.actual.errors.length === 0;
             }
         });
     });
@@ -160,6 +163,161 @@ describe("docSpecChecker", function describeBase(){
         expect(result.isValid).toBeTrue();
 
         expect(result.unspecifiedProperties.length).toBe(3);
+    });
+
+    describe("validates doc for single return type functions with", function(){
+
+        var testDoc;
+
+        beforeEach(function(){
+            testDoc = {
+                description: "does awesome",
+                returns: "a single thing"
+            };
+        });
+
+        it("no params", function testNoParams(){
+            /*
+                function(){}
+            */
+
+            expect(docValidator(testDoc)).toBeValid();
+        });
+
+        it("one signature and one param", function(){
+            /*
+                function(fileName){}
+            */
+
+            testDoc.params = "its description"; // Short-hand
+            expect(docValidator(testDoc)).toBeValid();
+
+            testDoc.params = { // Long-hand
+                description: "its description"
+            };
+            expect(docValidator(testDoc)).toBeValid();
+        });
+
+        it("one signature and multiple params", function(){
+            /*
+                function(param1, param2){}
+            */
+
+            testDoc.params = [
+                {
+                    description: "param1"
+                },
+                {
+                    description: "param2"
+                }
+            ];
+
+            expect(docValidator(testDoc)).toBeValid();
+
+        });
+
+        it("one param with three signatures", function(){
+            /*
+                function(anArray| aFunction | anObject){}
+                ---
+                function(array){}
+                function(function){}
+                function(object){}
+            */
+
+            testDoc.signatures = [
+                {
+                    description: "sig1",
+                    params: {
+                        description: "an array"
+                    }
+                },
+                {
+                    description: "sig 2",
+                    params: {
+                        description: "a function"
+                    }
+                },
+                {
+                    description: "sig 3",
+                    params: {
+                        description: "an object"
+                    }
+                }
+            ];
+
+            expect(docValidator(testDoc)).toBeValid();
+        });
+
+        it("multiple params with multiple signatures", function(){
+            /*
+                function(array) {}
+                function(array, number){}
+                function(function, array, number){}
+            */
+
+            testDoc.signatures = [
+                {
+                    description: "just array",
+                    params: "an array"
+                },
+                {
+                    description: "array and number",
+                    params: [
+                        {
+                            description: "an array"
+                        },
+                        {
+                            description: "a number"
+                        }
+                    ]
+                },
+                {
+                    description: "function array and a number",
+                    params: [
+                        {
+                            description: "function"
+                        },
+                        {
+                            description: "array"
+                        },
+                        {
+                            description: "number"
+                        }
+                    ]
+                }
+            ];
+
+            expect(docValidator(testDoc)).toBeValid();
+        });
+
+        it("'rest parameters' as only param", function(){
+            // function(){ args = arguments }
+
+            testDoc.params = {
+                name: "...",
+                description: "any number of objects",
+                exampleVal: "1, 2, 3"
+            };
+
+            expect(docValidator(testDoc)).toBeValid();
+        });
+
+        it("'rest param' as second parameter" ,function(){
+            // function(param1){ args=arguments }
+
+            testDoc.params = [
+                {
+                    description: "a string"
+                },
+                {
+                    name: "...",
+                    description: "any number of objects"
+                }
+            ];
+
+            expect(docValidator(testDoc)).toBeValid();
+        });
     });
 
 });
