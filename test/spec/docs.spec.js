@@ -17,6 +17,8 @@ var docFileNames = fs.readdirSync(docsPath).filter(function filterDocFileName(fi
     return fileName.indexOf('.js') > 0;
 });
 
+GLOBAL.window = {}; // define for window doc
+
 //--------------------------------HELPERS--------------------------------------
 
 describe("docs directory", function baseDocs(){
