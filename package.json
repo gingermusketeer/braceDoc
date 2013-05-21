@@ -32,7 +32,8 @@
     "grunt": "~0.4.1",
     "grunt-cli": "~0.1",
     "grunt-contrib-jshint": "~0.2",
-    "grunt-jasmine-node": "~0.1"
+    "grunt-jasmine-node": "~0.1",
+    "grunt-contrib-concat": "~0.3.0"
   },
   "keywords": []
 }

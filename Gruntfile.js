@@ -1,7 +1,7 @@
 /*{
     "description": [
         "The project Gruntfile. Grunt is only really used for",
-        "testing and code quality." 
+        "testing and code quality."
     ]
 }*/
 
@@ -38,16 +38,23 @@ module.exports = function(grunt) {
                     beforeEach: true  //!--jasmine globals
                 }
             }
-            
+
         },
         jasmine_node: {
             projectRoot: ".",
             requirejs: false
+        },
+        concat: {
+            dist: {
+                src: ["lib/docs/**/*.js"],
+                dest: "dist/docs!.js"
+            }
         }
     });
 
     grunt.loadNpmTasks('grunt-jasmine-node');
     grunt.loadNpmTasks('grunt-contrib-jshint');
+    grunt.loadNpmTasks('grunt-contrib-concat');
 
     grunt.registerTask('test', 'jasmine_node');
 
