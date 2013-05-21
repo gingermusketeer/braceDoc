@@ -3,10 +3,7 @@
   "description": "Live documentation for JavaScript objects.",
   "version": "0.2.0",
   "homepage": "https://github.com/gingermusketeer/braceDoc",
-  "author": {
-    "name": "Max Brosnahan",
-    "email": "maximilianbrosnahan@gmail.com"
-  },
+  "author": "Max Brosnahan <maximilianbrosnahan@gmail.com>",
   "repository": {
     "type": "git",
     "url": "git://github.com/gingermusketeer/braceDoc.git"
@@ -35,5 +32,17 @@
     "grunt-jasmine-node": "~0.1",
     "grunt-contrib-concat": "~0.3.0"
   },
-  "keywords": []
+  "keywords": [],
+  "readmeFilename": "README.md",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "grunt": "~0.4.1",
+    "grunt-cli": "~0.1.8",
+    "grunt-contrib-concat": "~0.3.0",
+    "grunt-contrib-jshint": "~0.2.0",
+    "grunt-jasmine-node": "~0.1.0"
+  },
+  "license": "MIT"
 }
