@@ -49,15 +49,22 @@ module.exports = function(grunt) {
                 entry: './lib/braceDoc!.js',
                 compile: './dist/braceDoc!.js'
             }
+        },
+        concat: {
+            dist: {
+                src: ["lib/docs/**/*.js"],
+                dest: "dist/docs!.js"
+            }
         }
     });
 
     grunt.loadNpmTasks('grunt-jasmine-node');
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-browserify2');
+    grunt.loadNpmTasks('grunt-contrib-concat');
 
     grunt.registerTask('test', 'jasmine_node');
 
     // Default task.
-    grunt.registerTask('default', ['browserify2:compile', 'test', 'jshint']);
+    grunt.registerTask('default', ['browserify2:compile', 'test', 'jshint', 'concat']);
 };
