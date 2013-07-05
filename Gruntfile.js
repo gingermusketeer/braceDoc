@@ -1,7 +1,7 @@
 /*{
     "description": [
         "The project Gruntfile. Grunt is only really used for",
-        "testing and code quality." 
+        "testing and code quality."
     ]
 }*/
 
@@ -38,19 +38,26 @@ module.exports = function(grunt) {
                     beforeEach: true  //!--jasmine globals
                 }
             }
-            
+
         },
         jasmine_node: {
             projectRoot: ".",
             requirejs: false
+        },
+        browserify2: {
+            compile: {
+                entry: './lib/braceDoc!.js',
+                compile: './dist/braceDoc!.js'
+            }
         }
     });
 
     grunt.loadNpmTasks('grunt-jasmine-node');
     grunt.loadNpmTasks('grunt-contrib-jshint');
+    grunt.loadNpmTasks('grunt-browserify2');
 
     grunt.registerTask('test', 'jasmine_node');
 
     // Default task.
-    grunt.registerTask('default', ['test', 'jshint']);
+    grunt.registerTask('default', ['browserify2:compile', 'test', 'jshint']);
 };
